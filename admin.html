@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — PATND Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Lilita+One&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a10;--card:#111118;--border:#222233;--purple:#A855F7;--turq:#22D3EE;--yellow:#FBBF24;--pink:#FF6B9D;--orange:#FF7A33;--text:#f0f0f0;--dim:#888;--red:#ef4444;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(circle,rgba(168,85,247,0.04) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;}
+
+#login{max-width:380px;margin:120px auto;text-align:center;position:relative;z-index:2;}
+#login .login-box{background:var(--card);border:3px solid var(--border);border-radius:20px;padding:40px 32px;box-shadow:6px 6px 0 rgba(0,0,0,0.3);}
+#login h2{font-family:'Lilita One',cursive;font-size:2rem;color:var(--yellow);margin-bottom:6px;}
+#login .sub{font-family:'Bangers',cursive;color:var(--purple);font-size:1rem;letter-spacing:2px;margin-bottom:24px;}
+#login input{width:100%;padding:14px 18px;border-radius:10px;background:var(--bg);border:3px solid var(--border);color:var(--text);font-size:1rem;margin-bottom:16px;outline:none;font-family:'DM Sans',sans-serif;}
+#login input:focus{border-color:var(--purple);}
+#login button{width:100%;padding:14px;border-radius:10px;background:var(--yellow);border:3px solid #000;color:#000;font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:1px;cursor:pointer;box-shadow:3px 3px 0 rgba(0,0,0,0.3);transition:all 0.15s;}
+#login button:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,0.3);}
+
+.container{max-width:900px;margin:0 auto;padding:24px;position:relative;z-index:2;}
+#admin{display:none;}
+
+.admin-header{display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+.logo{display:inline-flex;background:#111;border-radius:12px;padding:8px 16px;font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;text-decoration:none;border:3px solid #333;box-shadow:4px 4px 0 rgba(0,0,0,0.3);}
+.logo .lp,.logo .la{color:#A855F7;}.logo .lt{color:#22D3EE;}.logo .ln,.logo .ld{color:#FBBF24;}
+.admin-header .sub{font-family:'Bangers',cursive;color:var(--purple);font-size:1.2rem;letter-spacing:2px;}
+
+.form-section{background:var(--card);border:3px solid var(--border);border-radius:16px;padding:28px;margin-bottom:24px;box-shadow:4px 4px 0 rgba(0,0,0,0.3);}
+.form-section h2{font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:18px;color:var(--turq);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}.form-row.full{grid-template-columns:1fr;}
+label{font-family:'Bangers',cursive;font-size:0.9rem;color:var(--dim);margin-bottom:4px;display:block;letter-spacing:1px;}
+input,select,textarea{width:100%;padding:12px 16px;border-radius:8px;background:var(--bg);border:2px solid var(--border);color:var(--text);font-size:0.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;}
+input:focus,select:focus,textarea:focus{border-color:var(--purple);}
+textarea{resize:vertical;min-height:80px;}select{cursor:pointer;}
+
+.upload-area{border:3px dashed var(--border);border-radius:12px;padding:36px;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:12px;}
+.upload-area:hover{border-color:var(--purple);}
+.upload-area.has-file{border-color:var(--yellow);border-style:solid;background:rgba(251,191,36,0.03);}
+.upload-area input{display:none;}
+.upload-area p{color:var(--dim);font-family:'Bangers',cursive;font-size:1rem;letter-spacing:1px;}
+.upload-area .filename{color:var(--yellow);font-family:'Bangers',cursive;font-size:1.1rem;margin-top:8px;letter-spacing:1px;}
+.preview-img{max-width:200px;max-height:200px;border-radius:10px;margin-top:12px;border:2px solid var(--border);}
+
+.submit-btn{padding:14px 32px;border-radius:10px;background:var(--yellow);border:3px solid #000;color:#000;font-family:'Bangers',cursive;font-size:1.2rem;letter-spacing:1px;cursor:pointer;width:100%;box-shadow:3px 3px 0 rgba(0,0,0,0.3);transition:all 0.15s;}
+.submit-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,0.3);}
+.submit-btn:disabled{opacity:0.4;cursor:wait;transform:none;box-shadow:3px 3px 0 rgba(0,0,0,0.3);}
+
+.items-list{margin-top:24px;}
+.items-list h2{font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:1px;margin-bottom:16px;color:var(--turq);}
+.list-item{display:grid;grid-template-columns:60px 1fr auto auto;gap:12px;align-items:center;padding:14px;border:2px solid var(--border);border-radius:12px;margin-bottom:10px;background:var(--card);box-shadow:3px 3px 0 rgba(0,0,0,0.2);transition:border-color 0.2s;}
+.list-item:hover{border-color:var(--purple);}
+.list-item img{width:52px;height:52px;border-radius:8px;object-fit:cover;border:2px solid var(--border);}
+.list-item .info h4{font-family:'Bangers',cursive;font-size:1rem;letter-spacing:0.5px;margin-bottom:2px;}
+.list-item .info p{font-size:0.78rem;color:var(--dim);}
+.list-item .price{color:var(--yellow);font-family:'Lilita One',cursive;font-size:1.2rem;min-width:70px;text-align:right;}
+.list-item .actions{display:flex;gap:6px;}
+.sold-btn{padding:8px 14px;border-radius:8px;background:rgba(34,211,238,0.12);border:2px solid var(--turq);color:var(--turq);font-family:'Bangers',cursive;font-size:0.8rem;letter-spacing:1px;cursor:pointer;transition:all 0.15s;}
+.sold-btn:hover{background:var(--turq);color:#000;}
+.del-btn{padding:8px 14px;border-radius:8px;background:rgba(239,68,68,0.12);border:2px solid var(--red);color:var(--red);font-family:'Bangers',cursive;font-size:0.8rem;letter-spacing:1px;cursor:pointer;transition:all 0.15s;}
+.del-btn:hover{background:var(--red);color:#fff;}
+
+.status-msg{padding:14px;border-radius:10px;margin-bottom:16px;font-family:'Bangers',cursive;font-size:1rem;letter-spacing:1px;display:none;}
+.status-msg.success{display:block;background:rgba(34,211,238,0.1);border:2px solid var(--turq);color:var(--turq);}
+.status-msg.error{display:block;background:rgba(239,68,68,0.1);border:2px solid var(--red);color:var(--red);}
+
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}.list-item{grid-template-columns:50px 1fr;}.list-item .price,.list-item .actions{grid-column:2;}}
+</style>
+</head>
+<body>
+
+<div id="login">
+<div class="login-box">
+<h2>PATND</h2>
+<div class="sub">SHOP ADMIN</div>
+<input type="password" id="pw" placeholder="Enter password" autofocus>
+<button id="loginBtn">LET'S GO</button>
+</div>
+</div>
+
+<div id="admin" class="container">
+<div class="admin-header">
+  <span class="logo"><span class="lp">P</span><span class="la">A</span><span class="lt">T</span><span class="ln">N</span><span class="ld">D</span></span>
+  <span class="sub">SHOP ADMIN</span>
+</div>
+
+<div class="status-msg" id="status"></div>
+
+<div class="form-section">
+<h2>ADD NEW ITEM</h2>
+<div class="form-row"><div><label>TITLE *</label><input type="text" id="title" placeholder="e.g. Dior Book Tote"></div><div><label>PRICE (£) *</label><input type="number" id="price" step="0.01" placeholder="29.99"></div></div>
+<div class="form-row"><div><label>CATEGORY *</label><select id="category"><option value="clothes">Clothes</option><option value="jewelry">Jewelry</option><option value="bags">Bags</option></select></div><div><label>SIZE</label><input type="text" id="size" placeholder="e.g. UK 10, M, One Size"></div></div>
+<div class="form-row"><div><label>CONDITION</label><select id="condition"><option value="Brand new">Brand new</option><option value="Like new">Like new</option><option value="Pre-owned">Pre-owned</option><option value="Good">Good</option></select></div><div><label>BRAND</label><input type="text" id="brand" placeholder="e.g. Nike, Gucci, Dior"></div></div>
+<div class="form-row full"><div><label>DESCRIPTION</label><textarea id="description" placeholder="Describe the item..."></textarea></div></div>
+<div class="form-row full"><div><label>PHOTO *</label><div class="upload-area" id="uploadArea"><input type="file" id="photoInput" accept="image/*"><p>CLICK OR DRAG A PHOTO HERE</p><div class="filename" id="fileName"></div></div><img class="preview-img" id="preview" style="display:none"></div></div>
+<button class="submit-btn" id="addBtn">ADD ITEM</button>
+</div>
+
+<div class="items-list"><h2>YOUR ITEMS</h2><div id="itemsList"></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://qgsajxzxggdzqytfkgwr.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_ihQidin7MM6H725tBzVa1g_L4mloekV";
+const ADMIN_PASSWORD="PAtnd2626!!";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+let selectedFile=null;
+document.getElementById("loginBtn").addEventListener("click",doLogin);
+document.getElementById("pw").addEventListener("keydown",e=>{if(e.key==="Enter")doLogin();});
+function doLogin(){if(document.getElementById("pw").value===ADMIN_PASSWORD){document.getElementById("login").style.display="none";document.getElementById("admin").style.display="block";loadItems();}else{alert("Wrong password");}}
+var uploadArea=document.getElementById("uploadArea");var photoInput=document.getElementById("photoInput");
+uploadArea.addEventListener("click",()=>photoInput.click());
+uploadArea.addEventListener("dragover",e=>{e.preventDefault();});
+uploadArea.addEventListener("drop",e=>{e.preventDefault();if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]);});
+photoInput.addEventListener("change",()=>{if(photoInput.files[0])handleFile(photoInput.files[0]);});
+function handleFile(file){selectedFile=file;document.getElementById("fileName").textContent=file.name;uploadArea.classList.add("has-file");var reader=new FileReader();reader.onload=e=>{var prev=document.getElementById("preview");prev.src=e.target.result;prev.style.display="block";};reader.readAsDataURL(file);}
+document.getElementById("addBtn").addEventListener("click",addItem);
+async function addItem(){var title=document.getElementById("title").value.trim();var price=document.getElementById("price").value;var category=document.getElementById("category").value;var size=document.getElementById("size").value.trim();var condition=document.getElementById("condition").value;var brand=document.getElementById("brand").value.trim();var description=document.getElementById("description").value.trim();if(!title||!price||!selectedFile){showStatus("FILL IN TITLE, PRICE AND ADD A PHOTO","error");return;}var btn=document.getElementById("addBtn");btn.disabled=true;btn.textContent="UPLOADING...";try{var ext=selectedFile.name.split(".").pop();var fileName=Date.now()+"_"+Math.random().toString(36).substring(7)+"."+ext;var{data:uploadData,error:uploadErr}=await sb.storage.from("item-photos").upload(fileName,selectedFile,{cacheControl:"3600",upsert:false});if(uploadErr)throw uploadErr;var{data:urlData}=sb.storage.from("item-photos").getPublicUrl(fileName);var imageUrl=urlData.publicUrl;var{error:insertErr}=await sb.from("items").insert({title:title,price:parseFloat(price),category:category,size:size||null,condition:condition,brand:brand||null,description:description||null,image_url:imageUrl,sold:false});if(insertErr)throw insertErr;showStatus("ITEM ADDED!","success");clearForm();loadItems();}catch(e){showStatus("ERROR: "+e.message,"error");console.error(e);}btn.disabled=false;btn.textContent="ADD ITEM";}
+function clearForm(){document.getElementById("title").value="";document.getElementById("price").value="";document.getElementById("size").value="";document.getElementById("brand").value="";document.getElementById("description").value="";document.getElementById("fileName").textContent="";document.getElementById("preview").style.display="none";uploadArea.classList.remove("has-file");selectedFile=null;}
+async function loadItems(){var list=document.getElementById("itemsList");try{var{data,error}=await sb.from("items").select("*").order("created_at",{ascending:false});if(error)throw error;if(!data||data.length===0){list.innerHTML='<p style="color:var(--dim);padding:24px;text-align:center;font-family:Bangers,cursive;letter-spacing:1px">NO ITEMS YET. ADD YOUR FIRST ITEM ABOVE.</p>';return;}list.innerHTML=data.map(item=>'<div class="list-item"><img src="'+(item.image_url||"")+'" alt=""><div class="info"><h4>'+esc(item.title)+'</h4><p>'+item.category.toUpperCase()+(item.size?' · '+item.size:'')+(item.sold?' · <span style="color:var(--turq)">SOLD</span>':'')+'</p></div><div class="price">£'+parseFloat(item.price).toFixed(2)+'</div><div class="actions">'+(item.sold?'':'<button class="sold-btn" onclick="markSold('+item.id+')">SOLD</button>')+'<button class="del-btn" onclick="deleteItem('+item.id+')">DELETE</button></div></div>').join("");}catch(e){list.innerHTML='<p style="color:var(--red);padding:24px;text-align:center">Error: '+e.message+'</p>';}}
+async function markSold(id){if(!confirm("Mark as sold?"))return;await sb.from("items").update({sold:true}).eq("id",id);loadItems();}
+async function deleteItem(id){if(!confirm("Delete permanently?"))return;await sb.from("items").delete().eq("id",id);loadItems();}
+function showStatus(msg,type){var el=document.getElementById("status");el.textContent=msg;el.className="status-msg "+type;setTimeout(()=>{el.className="status-msg";},4000);}
+function esc(s){var d=document.createElement("div");d.textContent=s||"";return d.innerHTML;}
+</script>
+</body>
+</html>
