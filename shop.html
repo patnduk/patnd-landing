@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — PATND</title>
+<meta name="description" content="Shop clothes, jewelry and bags on Patnd.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='20' width='100' height='100' fill='%237C3AED'/><text x='50' y='72' text-anchor='middle' font-size='64' font-weight='900' fill='%23FBBF24' font-family='Arial Black'>P</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Lilita+One&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a10;--card:#111118;--border:#222233;--purple:#A855F7;--turq:#22D3EE;--yellow:#FBBF24;--pink:#FF6B9D;--orange:#FF7A33;--text:#f0f0f0;--dim:#888;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;color:#111;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+.hero-zone{background:#FBBF24;position:relative;overflow:hidden;}
+.hero-zone::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(circle,rgba(0,0,0,0.06) 1px,transparent 1px);background-size:20px 20px;pointer-events:none;}
+.hero-zone::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:80px;background:linear-gradient(to bottom,transparent,#0a0a10);pointer-events:none;z-index:3;}
+.dark-zone{background:#0a0a10;color:var(--text);position:relative;}
+.dark-zone::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-image:radial-gradient(circle,rgba(168,85,247,0.04) 1px,transparent 1px);background-size:24px 24px;pointer-events:none;}
+.container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:5;}
+nav{padding:20px 0;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:10;}
+.logo{display:inline-flex;background:#111;border-radius:12px;padding:8px 16px;font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;text-decoration:none;border:3px solid #000;box-shadow:4px 4px 0 rgba(0,0,0,0.3);transition:transform 0.2s;}
+.logo:hover{transform:rotate(-2deg) scale(1.05);}
+.logo .lp,.logo .la{color:#A855F7;}.logo .lt{color:#22D3EE;}.logo .ln,.logo .ld{color:#FBBF24;}
+.nav-links{display:flex;gap:16px;align-items:center;}
+.nav-links a{color:#333;text-decoration:none;font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:1px;transition:color 0.2s;}.nav-links a:hover{color:#000;}
+.shop-header{text-align:center;padding:40px 0 60px;position:relative;z-index:2;}
+.shop-header h1{font-family:'Lilita One',cursive;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:8px;color:#111;}
+.shop-header h1 .c-purple{color:var(--purple);text-shadow:2px 2px 0 rgba(0,0,0,0.15);}
+.shop-header p{color:#444;font-size:1.1rem;}
+.filters{display:flex;justify-content:center;gap:10px;margin-bottom:32px;flex-wrap:wrap;padding-top:40px;position:relative;z-index:2;}
+.filter-btn{padding:10px 22px;border-radius:10px;background:var(--card);border:3px solid var(--border);color:var(--dim);font-family:'Bangers',cursive;font-size:1rem;letter-spacing:1px;cursor:pointer;transition:all 0.15s;box-shadow:3px 3px 0 rgba(0,0,0,0.3);}
+.filter-btn:hover{border-color:var(--purple);color:var(--text);transform:translate(-1px,-1px);}
+.filter-btn.active{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:3px 3px 0 rgba(0,0,0,0.4);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;padding-bottom:80px;position:relative;z-index:2;}
+.item-card{background:var(--card);border:3px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.2s;cursor:pointer;box-shadow:4px 4px 0 rgba(0,0,0,0.3);}
+.item-card:hover{border-color:var(--purple);transform:translate(-3px,-3px);box-shadow:7px 7px 0 rgba(0,0,0,0.3);}
+.item-img{width:100%;aspect-ratio:1;object-fit:cover;background:#1a1828;display:block;}
+.item-img-placeholder{width:100%;aspect-ratio:1;background:#1a1828;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--dim);}
+.item-body{padding:16px;}
+.item-body h3{font-family:'Bangers',cursive;font-size:1.1rem;letter-spacing:0.5px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-meta{font-size:0.8rem;color:var(--dim);margin-bottom:10px;display:flex;gap:8px;align-items:center;}
+.cat-tag{font-family:'Bangers',cursive;font-size:0.75rem;padding:3px 10px;border-radius:6px;letter-spacing:1px;border:2px solid;}
+.cat-tag.clothes{background:rgba(168,85,247,0.12);color:var(--purple);border-color:var(--purple);}
+.cat-tag.jewelry{background:rgba(251,191,36,0.12);color:var(--yellow);border-color:var(--yellow);}
+.cat-tag.bags{background:rgba(34,211,238,0.12);color:var(--turq);border-color:var(--turq);}
+.cat-tag.accessories{background:rgba(255,107,157,0.12);color:#FF6B9D;border-color:#FF6B9D;}
+.item-bottom{display:flex;justify-content:space-between;align-items:center;}
+.item-price{font-family:'Lilita One',cursive;font-size:1.4rem;color:var(--yellow);}
+.buy-btn{padding:8px 18px;border-radius:8px;background:var(--yellow);border:2px solid #000;color:#000;font-family:'Bangers',cursive;font-size:0.9rem;letter-spacing:1px;cursor:pointer;text-decoration:none;box-shadow:2px 2px 0 rgba(0,0,0,0.3);transition:all 0.15s;}
+.buy-btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 rgba(0,0,0,0.3);}
+.empty-state{text-align:center;padding:80px 24px;color:var(--dim);position:relative;z-index:2;}
+.empty-state h2{font-family:'Bangers',cursive;font-size:1.5rem;color:var(--text);margin-bottom:8px;letter-spacing:1px;}
+.loading{text-align:center;padding:80px;color:var(--dim);position:relative;z-index:2;}
+.loading .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--yellow);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:100;align-items:center;justify-content:center;padding:24px;}.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:3px solid var(--border);border-radius:20px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:8px 8px 0 rgba(0,0,0,0.4);}
+.modal-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:17px 17px 0 0;}
+.modal-body{padding:24px;}
+.modal-body h2{font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:1px;margin-bottom:8px;}
+.modal-body .desc{color:var(--dim);font-size:0.9rem;line-height:1.6;margin-bottom:16px;}
+.modal-body .details{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;font-size:0.85rem;color:var(--dim);}
+.modal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:10px;background:#111;border:2px solid #333;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 rgba(0,0,0,0.3);}
+footer{padding:32px 0;background:#0a0a10;text-align:center;font-size:0.8rem;color:var(--dim);font-family:'Bangers',cursive;letter-spacing:1px;}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:12px;}.item-body{padding:12px;}.item-body h3{font-size:0.9rem;}}
+</style>
+</head>
+<body>
+<div class="hero-zone">
+<div class="container">
+<nav><a href="/" class="logo"><span class="lp">P</span><span class="la">A</span><span class="lt">T</span><span class="ln">N</span><span class="ld">D</span></a><div class="nav-links"><a href="/">HOME</a><a href="/shop.html" style="color:#000;text-decoration:underline">SHOP</a></div></nav>
+<div class="shop-header"><h1>THE <span class="c-purple">PATND</span> SHOP</h1><p>Clothes, jewelry & bags — curated picks, great prices.</p></div>
+</div>
+</div>
+
+<div class="dark-zone">
+<div class="container">
+<div class="filters"><button class="filter-btn active" data-cat="all">ALL</button><button class="filter-btn" data-cat="clothes">CLOTHES</button><button class="filter-btn" data-cat="jewelry">JEWELRY</button><button class="filter-btn" data-cat="bags">BAGS</button><button class="filter-btn" data-cat="accessories">ACCESSORIES</button></div>
+<div id="items" class="grid"><div class="loading"><div class="spinner"></div><p>Loading items...</p></div></div>
+</div>
+</div>
+
+<div class="modal-overlay" id="modal"><div class="modal" style="position:relative;"><button class="modal-close" id="modalClose">✕</button><img class="modal-img" id="modalImg" src="" alt=""><div class="modal-body"><h2 id="modalTitle"></h2><div class="details"><span id="modalCat" class="cat-tag"></span><span id="modalSize"></span><span id="modalCondition"></span></div><p class="desc" id="modalDesc"></p><div class="item-bottom"><span class="item-price" id="modalPrice"></span><a class="buy-btn" id="modalBuy" href="#" target="_blank">PAY WITH PAYPAL</a></div></div></div></div>
+
+<footer>PATND — SEARCH LESS. SAVE MORE.</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://qgsajxzxggdzqytfkgwr.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_ihQidin7MM6H725tBzVa1g_L4mloekV";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+let allItems=[],currentFilter="all";
+
+async function loadItems(){
+  const c=document.getElementById("items");
+  try{
+    const{data,error}=await sb.from("items").select("*").eq("sold",false).order("created_at",{ascending:false});
+    if(error)throw error;
+    allItems=data||[];
+    renderItems();
+  }catch(e){
+    c.innerHTML='<div class="empty-state"><h2>SHOP COMING SOON</h2><p>Check back shortly for new items.</p></div>';
+  }
+}
+
+function renderItems(){
+  const c=document.getElementById("items");
+  const f=currentFilter==="all"?allItems:allItems.filter(i=>i.category===currentFilter);
+  if(f.length===0){c.innerHTML='<div class="empty-state"><h2>NO ITEMS YET</h2><p>Check back soon.</p></div>';return;}
+  c.innerHTML=f.map(function(item){
+    var img=item.image_url
+      ?'<img class="item-img" src="'+item.image_url+'" alt="'+esc(item.title)+'" loading="lazy">'
+      :'<div class="item-img-placeholder">📦</div>';
+    var priceStr=parseFloat(item.price).toFixed(2);
+    return '<div class="item-card" data-id="'+item.id+'">'+img+
+      '<div class="item-body"><h3>'+esc(item.title)+'</h3>'+
+      '<div class="item-meta"><span class="cat-tag '+item.category+'">'+item.category.toUpperCase()+'</span>'+
+      (item.size?'<span>Size '+esc(item.size)+'</span>':'')+
+      '</div><div class="item-bottom">'+
+      '<span class="item-price">£'+priceStr+'</span>'+
+      '<a class="buy-btn" href="https://paypal.me/patnduk/'+priceStr+'" target="_blank" onclick="event.stopPropagation()">BUY</a>'+
+      '</div></div></div>';
+  }).join("");
+  c.querySelectorAll(".item-card").forEach(function(card){
+    card.addEventListener("click",function(){openModal(card.dataset.id);});
+  });
+}
+
+function openModal(id){
+  var item=allItems.find(function(i){return String(i.id)===String(id);});
+  if(!item)return;
+  var priceStr=parseFloat(item.price).toFixed(2);
+  document.getElementById("modalImg").src=item.image_url||"";
+  document.getElementById("modalTitle").textContent=item.title;
+  document.getElementById("modalDesc").textContent=item.description||"No description.";
+  document.getElementById("modalPrice").textContent="£"+priceStr;
+  document.getElementById("modalSize").textContent=item.size?"Size "+item.size:"";
+  document.getElementById("modalCondition").textContent=item.condition||"Brand new";
+  var catEl=document.getElementById("modalCat");
+  catEl.textContent=item.category.toUpperCase();
+  catEl.className="cat-tag "+item.category;
+  document.getElementById("modalBuy").href="https://paypal.me/patnduk/"+priceStr;
+  document.getElementById("modal").classList.add("open");
+}
+
+document.getElementById("modalClose").addEventListener("click",function(){
+  document.getElementById("modal").classList.remove("open");
+});
+document.getElementById("modal").addEventListener("click",function(e){
+  if(e.target===document.getElementById("modal"))document.getElementById("modal").classList.remove("open");
+});
+document.querySelectorAll(".filter-btn").forEach(function(btn){
+  btn.addEventListener("click",function(){
+    document.querySelectorAll(".filter-btn").forEach(function(b){b.classList.remove("active");});
+    btn.classList.add("active");
+    currentFilter=btn.dataset.cat;
+    renderItems();
+  });
+});
+function esc(s){var d=document.createElement("div");d.textContent=s||"";return d.innerHTML;}
+loadItems();
+</script>
+</body>
+</html>
